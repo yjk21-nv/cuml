@@ -1,8 +1,9 @@
 name: builddocs_py35
 channels:
-- gpuopenanalytics/label/dev
+- rapidsai
 - conda-forge
 - numba
+- mikewendt
 - defaults
 dependencies:
 - python=3.5.*
