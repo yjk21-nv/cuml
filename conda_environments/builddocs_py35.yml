@@ -1,9 +1,9 @@
 name: builddocs_py35
 channels:
+- mikewendt
 - rapidsai
 - conda-forge
 - numba
-- mikewendt
 - defaults
 dependencies:
 - python=3.5.*
