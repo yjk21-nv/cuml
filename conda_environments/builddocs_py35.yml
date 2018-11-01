@@ -6,9 +6,9 @@ channels:
 - mikewendt
 - defaults
 dependencies:
-- python=3.5.*
+- python=3.6.*
 - pytest
-- cudatoolkit=9.2
+- cudatoolkit-dev=9.2
 - cudf=0.2.0
 - numba>=0.40.0dev
 - pandas=0.20.*
