@@ -6,13 +6,13 @@ cuML API Reference
 K-Nearest Neighbors
 -------------------
 
-.. autoclass:: cuML.KNN
+.. autoclass:: cuml.KNN
     :members:
 
 K-Means
 -------------------
 
-.. autoclass:: cuML.KMeans
+.. autoclass:: cuml.KMeans
     :members:
 
 DBSCAN
