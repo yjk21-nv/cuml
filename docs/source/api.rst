@@ -1,23 +1,23 @@
 cuML API Reference
 ====================
 
-.. currentmodule:: cuML.DBSCAN
+.. currentmodule:: cuml.DBSCAN
 
 
 DBSCAN
 ---------
 
-.. autoclass:: cuML.DBSCAN
+.. autoclass:: cuml.DBSCAN
     :members:
     
 PCA
 ---------
 
-.. autoclass:: cuML.PCA
+.. autoclass:: cuml.PCA
     :members:
 
 Truncated SVD
 -------------
 
-.. autoclass:: cuML.TruncatedSVD
+.. autoclass:: cuml.TruncatedSVD
     :members:
