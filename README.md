@@ -1,59 +1,69 @@
-# cuML (v0.1 Alpha)
+# cuML
 
-Machine learning is a fundamental capability of RAPIDS. cuML is a suite of libraries that implements a machine learning algorithms within the RAPIDS data science ecosystem. cuML enables data scientists, researchers, and software engineers to run traditional ML tasks on  GPUs without going into the details of CUDA programming.
+Machine learning is a fundamental capability of RAPIDS. cuML is a suite of libraries that implements a machine learning algorithms within the RAPIDS data science ecosystem. cuML enables data scientists, researchers, and software engineers to run traditional ML tasks on GPUs without going into the details of CUDA programming.
 
 The cuML repository contains:
 
 1. ***python***: Python based GPU Dataframe (GDF) machine learning package that takes [cuDF](https://github.com/rapidsai/cudf) dataframes as input. cuML connects the data to C++/CUDA based cuML and ml-prims libraries without ever leaving GPU memory.
 
-2. ***cuML***: C++/CUDA machine learning algorithms. This library currently includes the following five algorithms;
-   a. Single GPU Truncated Singular Value Decomposition (tSVD),
-   b. Single GPU Principal Component Analysis (PCA),
-   c. Single GPU Density-based Spatial Clustering of Applications with Noise (DBSCAN),
-   d. Single GPU Kalman Filtering,
-   e. Multi-GPU K-Means Clustering.
+2. ***cuML***: C++/CUDA machine learning algorithms. This library currently includes the following six algorithms;
+   a) Single GPU Truncated Singular Value Decomposition (tSVD),
+   b) Single GPU Principal Component Analysis (PCA),
+   c) Single GPU Density-based Spatial Clustering of Applications with Noise (DBSCAN),
+   d) Single GPU Kalman Filtering,
+   e) Multi-GPU K-Means Clustering,
+   f) Multi-GPU K-Nearest Neighbors (Uses [Faiss](https://github.com/facebookresearch/faiss)).
 
 3. ***ml-prims***: Low level machine learning primitives used in cuML. ml-prims is comprised of the following components;
-   a. Linear Algebra,
-   b. Statistics,
-   c. Basic Matrix Operations,
-   d. Distance Functions,
-   e. Random Number Generation.
+   a) Linear Algebra,
+   b) Statistics,
+   c) Basic Matrix Operations,
+   d) Distance Functions,
+   e) Random Number Generation.
 
-#### Available Algorithms for version 0.1alpha:
+#### Available Algorithms:
 
-- Truncated Singular Value Decomposition (tSVD)
+- Truncated Singular Value Decomposition (tSVD).
 
-- Principal Component Analysis (PCA)
+- Principal Component Analysis (PCA).
 
-- Density-based spatial clustering of applications with noise (DBSCAN)
+- Density-based spatial clustering of applications with noise (DBSCAN).
 
-Upcoming algorithms for version 0.1:
+- K-Means Clustering.
 
-- K-Means Clustering
+- K-Nearest Neighbors (Requires [Faiss](https://github.com/facebookresearch/faiss) installation to use).
 
-- Kalman Filter
+Upcoming algorithms:
 
-More ML algorithms in cuML and more ML primitives in ml-prims are being added currently. Example notebooks are provided in the python folder to test the functionality and performance of this v0.1 alpha version. Goals for future versions include more algorithms and  multi-gpu versions of the algorithms and primitives.
+- Kalman Filter.
+
+More ML algorithms in cuML and more ML primitives in ml-prims are being added currently. Example notebooks are provided in the python folder to test the functionality and performance. Goals for future versions include more algorithms and multi-gpu versions of the algorithms and primitives.
 
 The installation option provided currently consists on building from source. Upcoming versions will add `pip` and `conda` options, along docker containers. They will be available in the coming weeks.
 
 
 ## Setup
 
-### Dependencies
+cuML is available from the rapidsai conda channel:
+```
+# Install dependencies first
+conda install -c pytorch faiss-gpu cuda92
+conda install -c rapidsai cuml
+```
 
-To use cuML, it must be cloned and built in an environment that already has the dependencies, including [cuDF](https://github.com/rapidsai/cudf-alpha) and its dependencies.
+### Dependencies for Installing/Building from Source:
+
+To use cuML from source, it must be cloned and built in an environment that already has the dependencies, including [cuDF](https://github.com/rapidsai/cudf) and its dependencies.
 
 List of dependencies:
 
-1. [cuDF](https://github.com/rapidsai/cudf-alpha) (>=0.2.0)
+1. [cuDF](https://github.com/rapidsai/cudf) (>=0.2.0)
 2. zlib
 3. cmake (>= 3.8, version 3.11.4 is recommended and there are issues with version 3.12)
-4. CUDA (>= 9.0)
+4. CUDA (>= 9.2)
 5. Cython (>= 0.28)
 6. gcc (>=5.4.0)
-7. faiss-gpu (>=1.4.0) - To install with conda: ```conda install -c pytorch faiss-gpu```
+7. faiss-gpu (>=1.4.0) - To install with conda: ```conda install -c pytorch faiss-gpu cuda92```
 
 ### Setup steps
 

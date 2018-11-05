@@ -15,18 +15,21 @@
 #
 
 
-import  os
+import os
 from os.path import join as pjoin
 from setuptools import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
-import subprocess
 import numpy
+import versioneer
+
+# adapted fom:
+# http://code.activestate.com/recipes/52224-find-a-file-given-a-search-path/
 
 
 def find_in_path(name, path):
-    "Find a file in a search path"
-    #adapted fom http://code.activestate.com/recipes/52224-find-a-file-given-a-search-path/
+    """Find a file in a search path"""
+
     for dir in path.split(os.pathsep):
         binpath = pjoin(dir, name)
         if os.path.exists(binpath):
@@ -38,28 +41,30 @@ def locate_cuda():
     """Locate the CUDA environment on the system
     Returns a dict with keys 'home', 'nvcc', 'include', and 'lib64'
     and values giving the absolute path to each directory.
-    Starts by looking for the CUDAHOME env variable. If not found, everything
+    Starts by looking for the CUDA_HOME env variable. If not found, everything
     is based on finding 'nvcc' in the PATH.
     """
 
-    # first check if the CUDAHOME env variable is in use
-    if 'CUDAHOME' in os.environ:
-        home = os.environ['CUDAHOME']
+    # first check if the CUDA_HOME env variable is in use
+    if 'CUDA_HOME' in os.environ:
+        home = os.environ['CUDA_HOME']
         nvcc = pjoin(home, 'bin', 'nvcc')
     else:
         # otherwise, search the PATH for NVCC
         nvcc = find_in_path('nvcc', os.environ['PATH'])
         if nvcc is None:
-            raise EnvironmentError('The nvcc binary could not be '
-                'located in your $PATH. Either add it to your path, or set $CUDAHOME')
+            raise EnvironmentError(
+                'The nvcc binary could not be located in your $PATH. Either '
+                'add it to your path, or set $CUDA_HOME')
         home = os.path.dirname(os.path.dirname(nvcc))
 
-    cudaconfig = {'home':home, 'nvcc':nvcc,
+    cudaconfig = {'home': home, 'nvcc': nvcc,
                   'include': pjoin(home, 'include'),
                   'lib64': pjoin(home, 'lib64')}
     for k, v in iter(cudaconfig.items()):
         if not os.path.exists(v):
-            raise EnvironmentError('The CUDA %s path could not be located in %s' % (k, v))
+            raise EnvironmentError(
+                'The CUDA %s path could not be located in %s' % (k, v))
 
     return cudaconfig
 
@@ -108,7 +113,6 @@ class custom_build_ext(build_ext):
         build_ext.build_extensions(self)
 
 
-
 CUDA = locate_cuda()
 
 # Obtain the numpy include directory.  This logic works across numpy versions.
@@ -122,7 +126,7 @@ ext = Extension('cuML',
                 sources=['../cuML/src/pca/pca.cu', '../cuML/src/tsvd/tsvd.cu', '../cuML/src/dbscan/dbscan.cu', 'cuML/cuml.pyx'],
                 depends=['../cuML/src/tsvd/tsvd.cu'],
                 library_dirs=[CUDA['lib64']],
-                libraries=['cudart','cublas','cusolver'],
+                libraries=['cudart', 'cublas', 'cusolver'],
                 language='c++',
                 runtime_library_dirs=[CUDA['lib64']],
                 # this syntax is specific to this build system
@@ -135,7 +139,7 @@ ext = Extension('cuML',
 
 setup(name='cuML',
       author='NVIDIA',
-      version='0.1',
-      ext_modules = [ext],
-      cmdclass={'build_ext': custom_build_ext},
+      version=versioneer.get_version(),
+      ext_modules=[ext],
+      cmdclass=cmdclass,
       zip_safe=False)
